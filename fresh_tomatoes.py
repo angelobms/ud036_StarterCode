@@ -5,20 +5,37 @@ import re
 
 # Styles and scripting for the page
 main_page_head = '''
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Fresh Tomatoes!</title>
 
-    <!-- Bootstrap 3 -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <!-- Bootstrap 3 -->  
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style type="text/css" media="screen">
+        /*
+         * Style tweaks
+         * --------------------------------------------------
+         */
+        html,
         body {
-            padding-top: 80px;
+          overflow-x: hidden; /* Prevent scroll on narrow devices */
+        }
+        body {
+          padding-top: 70px;
+        }
+        footer {
+          padding: 30px 0;
+        }            
+        img.center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        p.size {
+            font-size: 10px
         }
         #trailer .modal-dialog {
             margin-top: 200px;
@@ -36,8 +53,9 @@ main_page_head = '''
             height: 100%;
         }
         .movie-tile {
-            margin-bottom: 20px;
-            padding-top: 20px;
+            width: 28rem;
+            margin-bottom: 10px;
+            padding-top: 10px;
         }
         .movie-tile:hover {
             background-color: #EEE;
@@ -55,6 +73,51 @@ main_page_head = '''
             left: 0;
             top: 0;
             background-color: white;
+        }
+        
+        /*
+         * Off Canvas
+         * --------------------------------------------------
+         */
+        @media screen and (max-width: 767px) {
+          .row-offcanvas {
+            position: relative;
+            -webkit-transition: all .25s ease-out;
+                 -o-transition: all .25s ease-out;
+                    transition: all .25s ease-out;
+          }
+        
+          .row-offcanvas-right {
+            right: 0;
+          }
+        
+          .row-offcanvas-left {
+            left: 0;
+          }
+        
+          .row-offcanvas-right
+          .sidebar-offcanvas {
+            right: -50%; /* 6 columns */
+          }
+        
+          .row-offcanvas-left
+          .sidebar-offcanvas {
+            left: -50%; /* 6 columns */
+          }
+        
+          .row-offcanvas-right.active {
+            right: 50%; /* 6 columns */
+          }
+        
+          .row-offcanvas-left.active {
+            left: 50%; /* 6 columns */
+          }
+        
+          .sidebar-offcanvas {
+            position: absolute;
+            top: 0;
+            width: 50%; /* 6 columns */
+          }
         }
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -88,6 +151,8 @@ main_page_head = '''
 
 # The main page layout and title bar
 main_page_content = '''
+  <!DOCTYPE html>
+<html lang="en">
   <body>
     <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
@@ -101,30 +166,44 @@ main_page_content = '''
         </div>
       </div>
     </div>
-
+    
     <!-- Main Page Content -->
     <div class="container">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+            <a class="navbar-brand" href="#">My Movie Trailers Favorites - Marvel</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
+      <div class="row row-offcanvas row-offcanvas-right">
       {movie_tiles}
+      </div>
+      
+       <hr>
+      <footer>
+        <p>&copy; 2016 Angelo B.</p>
+      </footer>
     </div>
+    </div>
+   
   </body>
 </html>
 '''
 
-
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
+
+<div class="col-xs-6 col-lg-4 movie-tile" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+    <h4 class="text-center"><strong>{movie_title} ({movie_year})</strong></h4>
+    <p class="size text-center">{movie_rated} | {movie_genre} | {movie_duration}</p>
+    <img src="{poster_image_url}" width="220" height="342" class="center"><br/>      
+    <div>        
+        <p><b>Storyline: </b>{movie_storyline}</p>
+        <p><b>Director: </b>{movie_director}</p>
+    </div>
 </div>
 '''
 
@@ -144,6 +223,12 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
+            movie_duration = movie.duration,
+            movie_storyline = movie.storyline, 
+            movie_year = movie.year,   
+            movie_director = movie.director,        
+            movie_genre = movie.genre,        
+            movie_rated = movie.rated,    
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id
         )
