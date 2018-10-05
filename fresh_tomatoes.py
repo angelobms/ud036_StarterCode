@@ -9,7 +9,7 @@ main_page_head = '''
     <meta charset="utf-8">
     <title>Fresh Tomatoes!</title>
 
-    <!-- Bootstrap 3 -->  
+    <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -28,7 +28,7 @@ main_page_head = '''
         }
         footer {
           padding: 30px 0;
-        }            
+        }
         img.center {
             display: block;
             margin-left: auto;
@@ -74,7 +74,7 @@ main_page_head = '''
             top: 0;
             background-color: white;
         }
-        
+
         /*
          * Off Canvas
          * --------------------------------------------------
@@ -86,33 +86,26 @@ main_page_head = '''
                  -o-transition: all .25s ease-out;
                     transition: all .25s ease-out;
           }
-        
           .row-offcanvas-right {
             right: 0;
           }
-        
           .row-offcanvas-left {
             left: 0;
           }
-        
           .row-offcanvas-right
           .sidebar-offcanvas {
             right: -50%; /* 6 columns */
           }
-        
           .row-offcanvas-left
           .sidebar-offcanvas {
             left: -50%; /* 6 columns */
           }
-        
           .row-offcanvas-right.active {
             right: 50%; /* 6 columns */
           }
-        
           .row-offcanvas-left.active {
             left: 50%; /* 6 columns */
           }
-        
           .sidebar-offcanvas {
             position: absolute;
             top: 0;
@@ -166,7 +159,7 @@ main_page_content = '''
         </div>
       </div>
     </div>
-    
+
     <!-- Main Page Content -->
     <div class="container">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -179,16 +172,14 @@ main_page_content = '''
     </div>
     <div class="container">
       <div class="row row-offcanvas row-offcanvas-right">
-      {movie_tiles}
+        {movie_tiles}
       </div>
-      
        <hr>
       <footer>
         <p>&copy; 2016 Angelo B.</p>
       </footer>
     </div>
     </div>
-   
   </body>
 </html>
 '''
@@ -198,9 +189,9 @@ movie_tile_content = '''
 
 <div class="col-xs-6 col-lg-4 movie-tile" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <h4 class="text-center"><strong>{movie_title} ({movie_year})</strong></h4>
-    <p class="size text-center">{movie_rated} | {movie_genre} | {movie_duration}</p>
-    <img src="{poster_image_url}" width="220" height="342" class="center"><br/>      
-    <div>        
+    <p class="size text-center">{movie_rated}|{movie_genre}|{movie_duration}</p>
+    <img src="{poster_image_url}" width="220" height="342" class="center"><br/>
+    <div>
         <p><b>Storyline: </b>{movie_storyline}</p>
         <p><b>Director: </b>{movie_director}</p>
     </div>
@@ -223,12 +214,12 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
-            movie_duration = movie.duration,
-            movie_storyline = movie.storyline, 
-            movie_year = movie.year,   
-            movie_director = movie.director,        
-            movie_genre = movie.genre,        
-            movie_rated = movie.rated,    
+            movie_duration=movie.duration,
+            movie_storyline=movie.storyline,
+            movie_year=movie.year,
+            movie_director=movie.director,
+            movie_genre=movie.genre,
+            movie_rated=movie.rated,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id
         )
