@@ -20,7 +20,7 @@ Static page created to make your videos your favorite videos. The page is create
 + Add in the movie_favories of type Array the title and trailer ID in the youtule of your favorite movie.
 
 
-## Nome
+## Note
 The video id on youtube is obtained from the URL. For example: In the URL https://www.youtube.com/watch?v=xbqNb2PFKKA the video ID is ```xbqNb2PFKKA```
 
 
